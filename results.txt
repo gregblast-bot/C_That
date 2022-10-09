@@ -1,0 +1,6 @@
+The result of your multiplication is 36.00.
+The maximum number is 55.00 at location 2.00.
+The maximum number is 7.00 at location 4.00.
+The result of your addition is 3.00.
+The result of your divisor is 0.67.
+The result of your subtraction is -1.00.

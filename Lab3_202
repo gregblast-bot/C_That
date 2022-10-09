@@ -1,0 +1,76 @@
+INCLUDE core_cm4_constants.s ; Load Constant Definitions
+INCLUDE stm32l476xx_constants.s    
+IMPORT LCD_Initialization
+IMPORT LCD_Clear
+IMPORT LCD_DisplayString
+AREA    main, CODE, READONLY
+EXPORT __main ; make __main visible to linker
+ENTRY
+__main PROC
+
+LDR r0, =RCC_BASE ; go to rcc_base
+LDR r1, [r0, #RCC_AHB2ENR] ; load value at base + clock enable offset into r1
+ORR r1, r1, #0x02 ; bitwise OR to turn on GPIOB
+STR r1, [r0, #RCC_AHB2ENR] ; return the value back into clock enable register
+
+
+LDR r0, =GPIOB_BASE ; go to GPIOB base
+LDR r1, [r0, #GPIO_MODER] ; load value at base + MODER offset
+BIC r1, r1, #0x00F0 ; Clear bits 4,5 for Pin 2, 6,7 for Pin 3
+BIC r1, r1, #0xF000 ; Clear bits 12,13 for Pin 6, 14,15 for Pin 7
+ORR r1, r1, #0x0050 ; Set bits 4,6, to make the Pins output(output = '01')
+ORR r1, r1, #0x5000 ; Set bits 12,15 to make the Pins output(output = '01')
+STR r1, [r0, #GPIO_MODER] ; store the value back into the MODER register
+
+LDR r0, =GPIOB_BASE ; go to GPIOB base
+LDR r1, [r0, #GPIO_OTYPER] ; load value at base + OTYPER offset
+BIC r1, r1, #0x0CC ; Clear bits 2,3,6,7 to make output type push-pull(push-pull = '0')
+STR r1, [r0, #GPIO_OTYPER] ; Store the value back into the output type register
+
+; Set bits. This is ONLY for testing purposes.
+; LDR r0, =GPIOB_BASE
+; LDR r1, [r0, #GPIO_ODR]
+; ORR r1, r1, #0x084 ; Set bits
+; STR r1, [r0, #GPIO_ODR]
+
+; REG Values  HEX Display  Binary Values  Decimal Values
+; 0x004       == 1         0000 0100  4
+; 0x008       == 2   0000 1000  8
+; 0x00C       == 3   0000 1100  12
+; 0x040       == 4   0100 0000  64
+; 0x044       == 5   0100 0100  68
+; 0x048       == 6   0100 1000  72
+; 0x04C       == 7   0100 1100  76
+; 0x080       == 8   1000 0000  128
+; 0x084       == 9   1000 0100  132
+
+MOV r4, #0x000
+resetloop MOV r0, #0 ; make r0 = 0
+
+
+LDR r2, =GPIOB_BASE
+LDR r3, [r2, #GPIO_ODR]
+BIC r3, r3, #0xFF00
+BIC r3, r3, #0x00FF
+ORR r3, r3, r4 ; Set bits
+STR r3, [r2, #GPIO_ODR]
+
+CMP r4, #0x00C
+MOVEQ r4, #0x03C ; 60
+CMP r4, #0x04C
+MOVEQ r4, #0x07C ; 124
+CMP r4, #0x087 ; 135
+MOVEQ r4, #0x000
+ADDNE r4, r4, #1
+
+
+loop CMP r0, #0x4F000 ; compare r0 and 65,280
+BGE resetloop  ; if greater than or equal go to resetloop
+ADD r0, r0, #1  ; increment r0 if not greater than or equal
+B   loop ; go back to top of loop
+
+stop B stop     ; dead loop & program hangs here
+ENDP
+ALIGN
+AREA myData, DATA, READWRITE
+ALIGN
