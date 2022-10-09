@@ -1,0 +1,31 @@
+Question 1: What are the non-functional requirements that you need to consider for the following embedded systems? List all the requirements to be considered, and explain why. 1) An embedded sensor for home security system; 2) A hand controller for Xbox game console; 3) The image processor in a Canon DSLR camera.
+
+1) Low power consumption, can be hardwired to the home for power. Must be able to run on a backup battery for a suitable amount of time in the event that the home's electrical source is comprimised. 
+
+   The security system must be able to establish connection and communicate with the security company and/or the local law enforcement in the event of a perceived break in.
+
+   The deadline of the above task must be completed as soon as a security breach is perceived. Some form of identification (possibly multi-factor), such as a password input and a phone verification must be input to the security system in order to disable any perception of threat by by the system.
+
+   The software side of the security system will be non-intrusive. The physical components such as the password input pad, sensors and motion detecting lights will be minimally invasive. This will make for an easily implemented, minimally intrusive and camouflaged product.
+
+2) The controller should have as low power consumption as possible. We want a wireless controller that can handle at minimum two hours of play time. This is reasonable to strive for given average user play time and the ability to recharge. The controller also has to communicate seemlessly with the main console. Propogation delay should be minimal assuming a maximum playing distance of 50 meters.
+
+  The size and weight of the controller will be based off of the average adult male's hand size. This is a fair assessment given that this is the main market for this device. (If this were a Nintendo controller we might make a different assessment)
+
+3) The image processor should be a low power drawing component of the camera given the limited amount of power output from the battery(ies). The component will be compact and lightweight.
+
+   The throughput of the processor should be defined as something like, N pixels processed per second. The efficiency of the data reading and writing will be optimized. 
+
+   Data will be written and stored efficiently and reliably.
+
+Question 2: For the following components of an embedded system, what is the best choice of processor? ASIC, microprocessor, or FPGA? 1) WiFi chip on a smartphone; 2) image processing chip on a camera; 3) controller chip of a robot arm in assembly line.
+
+1) Microprocessor, it needs to be flexible in order to keep up with the WiFi updates.
+2) ASIC, the image processing chip can be predefined and needs to be optimized as much as possible before production.
+3) FPGA, chip will have flexibility and the hardware will be reprogrammable in the event of changes to the assembly line. FPGAs are also very scalable and have the ability to function efficiently in parallel. 
+
+Question 3: Consider designing a digital camera. Follow the top-down design methodology, and provide design details about the first four steps of the embedded system design flow: 1) Requirements; 2) Specification; 3) Architecture; 4) Component Design. Note that you need to provide block diagrams of both the hardware and software system architectures.
+
+1) 
+
+ 
